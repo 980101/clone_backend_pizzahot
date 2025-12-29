@@ -89,4 +89,4 @@ REST API 기반 백엔드 서버로 구현한 학습용 프로젝트입니다.
 ---
 
 ## 🔗 API 명세 요약
-( Base URL )
+Base URL : /api/v1
