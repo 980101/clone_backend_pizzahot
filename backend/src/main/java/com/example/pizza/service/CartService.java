@@ -15,11 +15,20 @@ public class CartService {
 	private final CartRepository cartRepository;
 	
 	@Transactional
-	public Cart getOrCreateCart(String deviceId) {
+	public Cart selectCart(String deviceId) {
 		return cartRepository.findByDeviceId(deviceId)
                 .orElseGet(() -> {
-                    Cart cart = new Cart(deviceId);
+                    Cart cart = new Cart(deviceId, 0);
                     return cartRepository.save(cart);
                 });
+	}
+	
+	@Transactional
+	public Cart insertCart(String deviceId, int quantity) {
+	    Cart cart = cartRepository.findByDeviceId(deviceId)
+	            .orElseGet(() -> cartRepository.save(new Cart(deviceId, 0)));
+
+	    cart.setQuantity(cart.getQuantity() + quantity);
+	    return cartRepository.save(cart);
 	}
 }

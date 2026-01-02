@@ -11,11 +11,13 @@ public class CartResponse {
 	
 	private Long cartId;
 	private String deviceId;
+	private int quantity;
 	
 	public static CartResponse from(Cart cart) {
 		return new CartResponse(
 				cart.getId(),
-				cart.getDeviceId()
+				cart.getDeviceId(),
+				cart.getQuantity()
 			);
 	}
 }
