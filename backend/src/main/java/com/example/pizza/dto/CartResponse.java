@@ -1,5 +1,7 @@
 package com.example.pizza.dto;
 
+import java.util.List;
+
 import com.example.pizza.entity.Cart;
 
 import lombok.AllArgsConstructor;
@@ -10,14 +12,16 @@ import lombok.Getter;
 public class CartResponse {
 	
 	private Long cartId;
-	private String deviceId;
-	private int quantity;
+	private Long deviceId;
+	private List<CartItemResponse> items;
 	
 	public static CartResponse from(Cart cart) {
 		return new CartResponse(
-				cart.getId(),
-				cart.getDeviceId(),
-				cart.getQuantity()
-			);
+			cart.getId(),
+			cart.getDeviceId(),
+			cart.getItems().stream()
+				.map(CartItemResponse::from)
+				.toList()
+		);
 	}
 }

@@ -1,19 +1,28 @@
 package com.example.pizza.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 public class CartItem {
-	@Id @GeneratedValue
+	
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	@ManyToOne
+	@JoinColumn(name = "cart_id")
 	private Cart cart;
 	
-	@ManyToOne
 	private Product product;
-	
 	private int quantity;
-	private int unitPrice;	// 스냅샷
-	private int totalPrice;
+	
+	protected CartItem() {}
+	
+	public CartItem(Cart cart, Product product, int quantity) {
+		this.cart = cart;
+		this.product = product;
+		this.quantity = quantity;
+	}
 }

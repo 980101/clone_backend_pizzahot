@@ -1,10 +1,13 @@
 package com.example.pizza.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
-@Data
+@Getter
 public class Cart {
 	
 	@Id
@@ -12,13 +15,20 @@ public class Cart {
 	private Long id;
 	
 	@Column(unique = true)
-	private String deviceId;
-	private int quantity;
+	private Long deviceId;
+	
+	@OneToMany(mappedBy = "cart")
+	private List<CartItem> items = new ArrayList<>();;
 	
 	protected Cart() {}
 	
-	public Cart(String deviceId, int quantity) {
+	public Cart(Long deviceId) {
 		this.deviceId = deviceId;
-		this.quantity = quantity;
+	}
+	
+	// cartitem 추가
+	public void addItem(CartItem item) {
+		items.add(item);
+		item.setCart(this);
 	}
 }
